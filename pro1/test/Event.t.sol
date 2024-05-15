@@ -14,7 +14,11 @@ contract EventTest is Test{
     e = new Event();
   }
   function testEmitTransferEvent() public{
+   vm.expectEmit(true,true,false,true);
 
+   emit Transfer(address(this), address(123), 456);
+
+   e.transfer(address(this), address(123), 456);
   }
 
   function testEmitManyTransferEvent() public{
