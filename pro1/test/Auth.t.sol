@@ -9,16 +9,19 @@ contract AuthTest is Test {
   Wallet public wallet;
 
   function setUp() public {
-    wallet = new Wallet();
+    wallet = new Wallet{value: 1e18}();
   }
+ 
+ //deal:set balance of address
+ //hoax: set prank and balance of address,deal+prank
+   function _send(uint256 amount) private {
+    (bool ok,) = address(wallet).call{value:amount}("");
 
-   function testSetOwner() public {
-    wallet.setOwner(address(1));
-    assertEq(wallet.owner(),address(1));
+    require(ok,"send eth failed");
    }
 
-   function testFailNotOwner() public{
-    vm.prank(address(1));
-    wallet.setOwner(address(1));
+
+   function testEthBalance() public view{
+      console.log("EthBalance",address(this).balance/1e18);
    }
 }

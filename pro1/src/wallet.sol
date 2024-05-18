@@ -20,4 +20,10 @@ contract Wallet{
         require(msg.sender==owner,"caller is not owner");
         owner = payable(_owner);
     }
+
+    function testSendEth() public {
+        deal(address(1), 100);
+
+        assert(address(1).balance,100);
+    }
 }
